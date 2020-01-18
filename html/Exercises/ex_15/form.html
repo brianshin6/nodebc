@@ -1,0 +1,65 @@
+<fieldset>
+    <form action="create_user.html" method="get" enctype="application/x-www-form-urlencoded">
+    
+    
+       <label>
+    Username:
+       <input type="text" name="username" placeholder="username" size="30" maxlength="12" required pattern="^[a-zA-Z]+$" title="Input only letters">
+       </label>
+       <label>
+          Password
+          <input type="password" name="password" placeholder="password" size="30" maxlength="8" required pattern="^[0-9]+$" title="Input only numbers">
+       </label>
+     
+      <br>
+      <br>
+     
+          <label>
+            Select your favourite Superhero
+            <br>
+            <input type="radio" name="superheroes" value="Superman" checked="checked"> Superman
+            <input type="radio" name="superheroes" value="Batman"> Batman
+            <input type="radio" name="superheroes" value="Wonder Woman"> Wonder Woman
+            <input type="radio" name="superheroes" value="Hulk"> Hulk
+            <input type="radio" name="superheroes" value="Thor"> Thor
+            <input type="radio" name="superheroes" value="Flash"> Flash
+         </label> 
+       
+       <br>
+       <br>
+        <label>
+           Select your favourite video game
+           <br>
+           <input type="checkbox" name="videogames" value="FIFA" checked="checked" > FIFA
+           <input type="checkbox" name="videogames" value="NHL" > NHL
+           <input type="checkbox" name="videogames" value="Resident Evil" > Resident Evil
+           <input type="checkbox" name="videogames" value="Uncharted" checked="checked" > Uncharted
+        </label>
+       <br>
+       <br>
+        <label>
+           Select your birthdate
+           <input type="date" name="birthday" />
+        </label>
+        <br>
+        <br>
+        <label>
+           Enter your email
+           <input type="email" name="email" required/>
+        </label>
+        <br>
+        <br>
+        <label>
+           Enter your website
+           <input type="url" name="personalsite" />
+        </label>
+        <br>
+        <br>
+        
+     
+     <input type="hidden" name="userid" value="2300">
+      
+      
+         <input type="image" src="/img/register_button.png" height="50" width="130">
+    </form>
+   

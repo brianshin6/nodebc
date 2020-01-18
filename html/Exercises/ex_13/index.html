@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html> 
+ <head>
+  <title> Create User </title>
+ </head>
+ <body>
+     <h1> Create User </h1>
+     <hr>
+     <form action="create_user.html" method="get" enctype="application/x-www-form-urlencoded">
+        <label> Name    
+        <input type="text" name="name" placeholder="name">
+        </label>
+        <select name="options">
+            <option value="deadpool"> Deadpool </option>
+            <option value="batman_vs_superman"> Batman v Superman </option>
+            <option value="civil_war"> Captain America: Civil War </option>
+            <option value="doctor_strange"> Doctor Strange </option>
+            <option value="suicide_squad"> Suicide Squad </option>
+            <option value="apocalypse"> "X-Men: Apocalypse" </option>
+            <option value="gotg_vol2"> Guardians of the Galaxy Vol 2 </option>
+            <option value="justice_league"> Justice League </option>
+            <option value="logan"> Logan </option>
+            <option value="homecoming"> Spider-Man: Homecoming </option>
+            <option value="wonder_woman" selected="selected"> Wonder Woman </option>
+            <option value="thor_ragnarok"> Thor: Ragnarok </option>
+            <option value="black_panther"> Black Panther </option>
+        </select>
+        <br>
+        <br>
+        <textarea name="bio" placeholder="Tell us about yourself" cols="56" rows="5" ></textarea>
+        <br>
+        <br>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="filename" />
+            <br>
+            <br>
+            <button value="clear form" name="clear form"> Clear Form </button>
+            <button value="create" name="create-user"> Add New User</button>
+            </form>
+        </body>
+        </html>
