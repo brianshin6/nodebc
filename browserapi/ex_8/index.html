@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Running http-server</title>
+    <script>
+        window.alert('This program adds all the numbers you input!')
+
+        confirmation = window.confirm('Would you like to try?')
+        if (confirmation === true) {
+            let number1 = window.prompt('Please input a number')
+            let number2 = window.prompt('Please input next number')
+            let sum = +number1 + +number2
+            window.confirm(`The sum of the numbers you inputted are ${sum}!`)
+            confirm2 = window.confirm('would you like to continue?')    
+            let number3 = window.prompt('Please input next number')
+            
+                result = +sum + +number3
+                window.confirm(`The sum of the numbers you inputted are ${result}`)
+            }
+        }
+             else {
+            window.alert("That's too bad")
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <h1> Congrats!! </h1>
+    <p> We're using http-server from node :) </p>
+</body>
+
+</html>
+
+
+<!-- for (let f=0, f1=-1, f2=1, i=1; i<=10; f=f1+f2, f1=f2, f2=f, i++) -->
