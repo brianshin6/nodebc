@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Running http-server</title>
+        <script> 
+        let i = 0;
+        const timer = function() {
+            if (i < Infinity) {
+                i++;
+                console.log(`You have been on this website for ${i} seconds`)
+            }
+            
+        }
+
+        const interval = setInterval(timer, 1000);
+            
+        </script>
+    </head>
+    <body>
+        <h1> Congrats!! </h1>
+        <p> We're using http-server from node :) </p>
+    </body>
+</html>

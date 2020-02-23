@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Running http-server</title>
+    <script>
+
+        username = window.prompt('Please enter your username')
+        password = window.prompt('Please enter your password')
+        window.alert(`Welcome ${username}`)
+        setTimeout(function () {
+            if (loggedin = window.confirm("Do you still want to be logged in?") == true) {
+                window.alert(`${username} your session has been restored`)
+            } else {
+                window.alert(`${username} your session has expired`)
+            };}, 10000);
+
+
+
+    </script>
+</head>
+
+<body>
+    <h1> Congrats!! </h1>
+    <p> We're using http-server from node :) </p>
+</body>
+
+</html>
