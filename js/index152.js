@@ -24,23 +24,24 @@ let user = {
     password: null,
     greet: function() {
         if (user.username !== null) {
-            console.log(`Hello, I am user ${user.username}`)
+            console.log(`Hello, I am user ${this.username}`)
         } else {
             console.log('Please assign a username value')
         }
     },
     updatePassword: function(updatedPassword) {
-        updatedPassword = user.password
-        console.log(updatedPassword)
+        this.password = updatedPassword
+        
+        
     },
     updateUsername: function(updatedUsername) {
-        updatedUsername = user.username
-        console.log(updatedUsername)
-    }
+        this.username = updatedUsername
+        
+        }
+    
 }
 
 user.updatePassword(123)
 user.updateUsername('Brian')
 user.greet()
 
-console.log(user.password)
