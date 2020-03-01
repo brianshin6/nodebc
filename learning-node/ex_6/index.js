@@ -3,7 +3,7 @@ console.log(`Hi ${firstName} ${lastName}`)
 callback()
 }
 
-function callBack() {
+let callBack = () => {
     console.log(`This code gets executed after the greet function call`)
 }
 
