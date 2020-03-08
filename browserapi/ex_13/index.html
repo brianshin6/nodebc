@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Running http-server</title>
+        <script> 
+       let time = prompt('How many seconds would you like to be on the site?')
+       let timer = function() {
+           if (time != 0) {
+               console.log(`${time--} seconds left on your session`)
+           } else if(time == 0) {
+               window.alert(`Your session has expired, please come again`)
+               clearInterval(session)
+           }
+       } 
+       let session = setInterval(timer, 1000)
+        </script>
+    </head>
+    <body>
+        <h1> Congrats!! </h1>
+        <p> We're using http-server from node :) </p>
+    </body>
+</html>

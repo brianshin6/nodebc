@@ -1,15 +1,10 @@
-// require the express module
 const express = require('express');
-
-// then create a express server
+const Logger = require('logplease')
 const app = express();
+const logger = Logger.create('server')
 
-// configure the default route and send a text as response
-app.get('/', function(request, response) {
-  response.send('Hello Node.js World!');
-});
+app.get('/', (request, response) => response.send('Hello Node.js World!'));
+app.get('/about', (request, response) => response.send('This is my about page'));
+app.get('/contact', (request, response) => response.send('Ths is my contact page'));
 
-// configure the port that express is going to listen to
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000!');
-});
+app.listen(3000, () => logger.info('Example app listening on port 3000!'));

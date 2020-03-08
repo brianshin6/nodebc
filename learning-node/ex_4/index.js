@@ -1,3 +1,3 @@
 const oneLinerJoke = require('one-liner-joke')
-let randomJoke = oneLinerJoke.getRandomJoke({'exclude_tags': ['christian', 'racist']})
+let randomJoke = oneLinerJoke.getRandomJoke()
 console.log(randomJoke)
