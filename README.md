@@ -7,4 +7,4 @@ This project is to learn HTML, CSS, JS, Node.js and MongoDB
 3. [JavaScript exercises](js)
 4. [Browser API exercises](browserapi)
 5. [NodeJS exercises](learning-node)
-6. [Final Project](Pine_Bark)
+6. [Final Project](Pine&Bark)
