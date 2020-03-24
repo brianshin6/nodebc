@@ -1,9 +1,18 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
 const port = 3000;
+//Mongoose implementation
+const mongoose = require('mongoose');
+//let uri = "mongodb+srv://node-site-example:node-site-example1234@cluster0-1regk.mongodb.net/comics?retryWrites=true&w=majority";
+let uri = "mongodb://localhost:27017/comics";
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+//Mongoose Model (Work as a Schema)
+const Superheroe = mongoose.model('Superheroe', {
+    name: String,
+    image: String
+});
 
 //This is what you use to have multipart form data
 const multer = require('multer');
@@ -16,57 +25,108 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
     }
 })
-
 const upload = multer({ storage: storage });
 app.use('/', express.static('public'));
-
+//Setting up pug as template engine
+//using the convention to have all views in views folder.
 app.set('view engine', 'pug');
-
-const superheroes = [
-    { id: 1, name: 'SPIDER-MAN', image: 'spiderman.jpg' },
-    { id: 2, name: 'CAPTAIN MARVEL', image: 'captainmarvel.jpg' },
-    { id: 3, name: 'HULK', image: 'hulk.jpg' },
-    { id: 4, name: 'THOR', image: 'thor.jpg' },
-    { id: 5, name: 'IRON MAN', image: 'ironman.jpeg' },
-    { id: 6, name: 'DAREDEVIL', image: 'daredevil.jpg' },
-    { id: 7, name: 'BLACK WIDOW', image: 'blackwidow.jpg' },
-    { id: 8, name: 'CAPTAIN AMERICA', image: 'captainamerica.jpg' },
-    { id: 9, name: 'WOLVERINE', image: 'wolverine.jpg' },
-];
-
-app.get('/', (req, res) => {
-    res.render('index', { superheroes: superheroes });
-});
-
-app.get('/superheroes/', (req, res) => {
-    res.render('superhero', { superheroes: superheroes });
-});
-
-app.get('/superheroes/:id', (req, res) => {
-    const selectedId = req.params.id;
-
-    let selectedSuperhero = superheroes.filter(superhero => {
-        return superhero.id === +selectedId;
-    });
-
-    selectedSuperhero = selectedSuperhero[0];
-
-    res.render('superhero', { superheroe: selectedSuperhero });
-});
-
-app.post('/superheros', upload.single('file'), (req, res) => {
-    const newId = superheroes[superheroes.length - 1].id + 1;
-    
-    const newSuperHero = {
-      id: newId, 
-      name: req.body.superhero.toUpperCase(), 
-      image: req.file.filename
+//Index - Entry point - First page a user will see 
+app.get('/', async (req, res) => {
+    //internal scope of this function
+    const documents = await Superheroe.find().exec();
+    const indexVariables = {
+        pageTitle: "First page of our app",
+        superheroes: documents
     }
-    
-    superheroes.push(newSuperHero);
-    
+    res.render('index', { variables: indexVariables });
+});
+//Create endpoint
+app.get('/create', (req, res) => {
+    //internal scope of this function
+    res.render('create');
+})
+//detail view
+app.get('/superheroes/:id', async (req, res) => {
+    //internal scope of this function
+    const selectedId = req.params.id;
+    const document = await Superheroe.findById(selectedId).exec();
+    res.render('superhero', { superheroe: document });
+});
+//update view
+app.get('/update/:id', async (req, res) => {
+    try {
+        //internal scope of this function
+        const selectedId = req.params.id;
+        const document = await Superheroe.findById(selectedId).exec();
+        res.render('update', { superheroe: document });
+    } catch (err) {
+        console.log("ERR: ", err)
+    }
+});
+//delete endpoint
+app.get('/delete/:id', async (req, res) => {
+    //internal scope of this function
+    const idToDelete = req.params.id;
+    const document = await Superheroe.findById(idToDelete).exec();
+    //Delete the image
+    deleteImage(document.image);
+    //Delete object from database
+    await Superheroe.deleteOne({ _id: idToDelete }).exec();
     res.redirect('/');
-  });
+});
+//Create post method
+app.post('/superheroes', upload.single('file'), (req, res) => {
+    //internal scope of this function
+    const newSuperHero = {
+        name: req.body.superhero.toUpperCase(),
+        image: req.file.filename
+    }
+    const superheroe = new Superheroe(newSuperHero);
+    superheroe.save()
+    res.redirect('/');
+});
+//Update method superheroeUpdate
+app.post('/superheroUpdate/:id', upload.single('file'), async (req, res) => {
+    try {
+        const idToUpdate = req.params.id;
+
+        //create the updateObject
+        let updateObject = {
+            "name": req.body.superhero.toUpperCase(),
+        }
+        //logic to handle the image
+        if (req.file) {
+            console.log("Updating image");
+            updateObject.image = req.file.filename;
+        }
+        //call update on database
+        let filter = { _id: idToUpdate };
+
+        //find the document and put in memory
+        const document = await Superheroe.findById(idToUpdate).exec();
+
+        let result = await Superheroe.updateOne(filter, updateObject).exec();
+        if (result.ok > 0 && req.file) {
+            // delete the image 
+            deleteImage(document.image);
+        }
+    } catch (err) {
+        console.log("ERR: ", err);
+    } finally {
+        //redirect user to index
+        res.redirect('/');
+    }
+});
+
+function deleteImage(image){
+    const dir = __dirname + "/public/img/superheroes/" + image;
+    if (fs.existsSync(dir)) {
+        fs.unlink(dir, (err) => {
+            if (err) throw err;
+            console.log('successfully deleted images from folder superheroes');
+        });
+    }
+}
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
